@@ -8,20 +8,33 @@ class MessageBox extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			messages: []
+			messages: {}
 		};
 		this.firebaseRef = new Firebase('https://react-firebase-proj.firebaseio.com/messages');
-		this.firebaseRef.once('value',(data)=>{
-			var messages = data.val();
+		this.firebaseRef.on('child_added',(data)=>{
+			if(this.state.messages[data.key()]){
+				return;
+			}
+
+			var messageVal = data.val();
+			messageVal.key = data.key();
+			this.state.messages[messageVal.key] = messageVal;
 			this.setState({
-				messages:messages
+				messages:this.state.messages
+			});
+		});
+		this.firebaseRef.on('child_removed',(data)=>{
+			var key = data.key();
+			delete this.state.messages[key];
+			this.setState({
+				messages:this.state.messages
 			});
 		});
 	}
 
 
 	render(){
-		var messages = this.state.messages.map((message)=>{
+		var messages = _.values(this.state.messages).map((message)=>{
 			return (
 				<Message message={message.message}/>
 				);
@@ -29,7 +42,7 @@ class MessageBox extends Component{
 
 		return (
 			
-				<Card style={{flexGrow:2}}><List>{messages}</List></Card>
+				<Card style={{flexGrow:2,margin:' 0 0 0 30px'}}><List>{messages}</List></Card>
 			
 			);
 	}

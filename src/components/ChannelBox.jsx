@@ -23,7 +23,9 @@ class ChannelBox extends Component{
 
 		return (
 			
-				<Card style={{flexGrow:1}}><List>{channels}</List></Card>
+				<Card style={{flexGrow:1,margin:'0 30px 0 0'}}>
+					<List>{channels}</List>
+				</Card>
 			
 			);
 	}
