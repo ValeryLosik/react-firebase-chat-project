@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import {ListItem,Avatar} from 'material-ui';
 
 class Message extends Component{
 	constructor(props){
@@ -8,7 +8,9 @@ class Message extends Component{
 
 
 	render(){
-		return (<div>{this.props.message}</div>);
+		return (<ListItem
+			leftAvatar={<Avatar src=""/>}
+			>{this.props.message}</ListItem>);
 	}
 }
 
