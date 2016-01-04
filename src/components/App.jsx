@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MessageBox from './MessageBox.jsx';
+import MessageForm from './MessageForm.jsx';
 import ChannelBox from './ChannelBox.jsx';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import AppTheme from './AppTheme.jsx';
@@ -30,12 +31,13 @@ class App extends Component{
 					flexFlow:'row wrap',
 					maxWidth:1200,
 					width:'100%',
-					margin:'30px auto 30px'
+					margin:'30px auto'
 
 				}}>
 					<ChannelBox/>
 					<MessageBox/>
 				</div>
+				<MessageForm/>
 			</div>);
 	}
 }
