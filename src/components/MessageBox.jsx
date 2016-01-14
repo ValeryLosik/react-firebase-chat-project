@@ -7,34 +7,36 @@ import _ from 'lodash';
 class MessageBox extends Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			messages: {}
-		};
-		this.firebaseRef = new Firebase('https://react-firebase-proj.firebaseio.com/messages');
-		this.firebaseRef.on('child_added',(data)=>{
-			if(this.state.messages[data.key()]){
-				return;
-			}
+		// this.state = {
+		// 	messages: {}
+		// };
+	// 	this.firebaseRef = new Firebase('https://react-firebase-proj.firebaseio.com/messages');
+	// 	this.firebaseRef.on('child_added',(data)=>{
+	// 		if(this.state.messages[data.key()]){
+	// 			return;
+	// 		}
 
-			var messageVal = data.val();
-			messageVal.key = data.key();
-			this.state.messages[messageVal.key] = messageVal;
-			this.setState({
-				messages:this.state.messages
-			});
-		});
-		this.firebaseRef.on('child_removed',(data)=>{
-			var key = data.key();
-			delete this.state.messages[key];
-			this.setState({
-				messages:this.state.messages
-			});
-		});
+	// 		var messageVal = data.val();
+	// 		messageVal.key = data.key();
+	// 		this.state.messages[messageVal.key] = messageVal;
+	// 		this.setState({
+	// 			messages:this.state.messages
+	// 		});
+	// 	});
+	// 	this.firebaseRef.on('child_removed',(data)=>{
+	// 		var key = data.key();
+	// 		delete this.state.messages[key];
+	// 		this.setState({
+	// 			messages:this.state.messages
+	// 		});
+	// 	});
+	// }
+}
+	static childContextTypes = {
+		messages:PropTypes.array.isRequired
 	}
-
-
 	render(){
-		var messages = _.values(this.state.messages).map((message)=>{
+		var messages = this.props.messages.map((message)=>{
 			return (
 				<Message message={message.message}/>
 				);
@@ -47,5 +49,6 @@ class MessageBox extends Component{
 			);
 	}
 }
+
 
 export default MessageBox;

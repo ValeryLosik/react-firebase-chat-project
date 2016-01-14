@@ -9,7 +9,11 @@ class MessageForm extends Component{
 		this.state = {
 			message:''
 		}
-		this.firebaseRef = new Firebase('https://react-firebase-proj.firebaseio.com/messages');
+		// this.firebaseRef = new Firebase('https://react-firebase-proj.firebaseio.com/messages');
+	}
+
+	static childContextTypes = {
+		createMessage:PropTypes.func.isRequired
 	}
 
 	onChange(evt){
@@ -21,13 +25,14 @@ class MessageForm extends Component{
 	onKeyUp(evt){
 		if(evt.keyCode === 13 && trim(evt.target.value)!=''){
 			evt.preventDefault();
-
-			this.firebaseRef.push({
-				message:this.state.message
-			});
+			this.props.createMessage(evt.target.value);
 			this.setState({
 				message:''
 			});
+			// this.firebaseRef.push({
+			// 	message:this.state.message
+			// });
+
 			console.log('Message sent ',evt.target.value);
 		}
 	}

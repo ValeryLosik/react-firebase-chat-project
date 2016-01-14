@@ -1,6 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import {render} from 'react-dom';
+import App from './containers/App.jsx';
+import {Provider} from 'react-redux';
+import configureStore from './store/configureStore';
 require('./main.scss');
 
-ReactDOM.render(<App/>,document.getElementById('container'));
+
+const store = configureStore();
+render(
+		<Provider store = {store}>
+		<App/>
+		</Provider>
+	,document.getElementById('container'));
